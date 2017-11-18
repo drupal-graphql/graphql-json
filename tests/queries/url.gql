@@ -1,13 +1,17 @@
 query {
   route(path: "http://graphql.drupal/json") {
-    request {
-      json {
-        ... on JsonObject {
-          url:pathToUrl(steps: ["url"]) {
-            request {
-              json {
-                ... on JsonLeaf {
-                  value
+    ... on ExternalUrl {
+      request {
+        json {
+          ... on JsonObject {
+            url:pathToUrl(steps: ["url"]) {
+              ... on ExternalUrl {
+                request {
+                  json {
+                    ... on JsonLeaf {
+                      value
+                    }
+                  }
                 }
               }
             }

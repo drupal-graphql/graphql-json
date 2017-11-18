@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "json",
  *   secure = true,
  *   type = "JsonNode",
- *   types = {"File"},
+ *   parents = {"File"},
  * )
  */
 class JsonFile extends FieldPluginBase {

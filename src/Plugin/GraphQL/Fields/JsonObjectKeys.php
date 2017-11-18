@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "keys",
  *   type = "String",
  *   multi = true,
- *   types = {"JsonObject"}
+ *   parents = {"JsonObject"}
  * )
  */
 class JsonObjectKeys extends FieldPluginBase {

@@ -16,7 +16,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   secure = true,
  *   name = "pathToEntity",
  *   type = "Entity",
- *   types = {"JsonObject", "JsonList"},
+ *   parents = {"JsonObject", "JsonList"},
  *   arguments={
  *     "type" = {
  *       "type" = "String"

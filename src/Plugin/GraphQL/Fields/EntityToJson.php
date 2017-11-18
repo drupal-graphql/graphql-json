@@ -16,7 +16,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   id = "entity_to_json",
  *   name = "toJson",
  *   type = "JsonObject",
- *   types = {"Entity"},
+ *   parents = {"Entity"},
  *   deriver = "\Drupal\graphql_json\Plugin\Deriver\EntityToJsonDeriver"
  * )
  */

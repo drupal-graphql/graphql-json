@@ -8,15 +8,12 @@ use Youshido\GraphQL\Execution\ResolveInfo;
 /**
  * Retrieve json leaf values.
  *
- * TODO: Right now this always returns strings. When Scalar union types are
- *       possible in GraphQL we could return the proper type instead.
- *
  * @GraphQLField(
  *   id = "json_leaf_value",
  *   secure = true,
  *   name = "value",
  *   type = "String",
- *   types = {"JsonLeaf"}
+ *   parents = {"JsonLeaf"}
  * )
  */
 class JsonLeafValue extends FieldPluginBase {

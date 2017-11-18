@@ -25,7 +25,6 @@ class JsonEntitySerializeTest extends GraphQLFileTestBase {
     'node',
     'serialization',
     'graphql_core',
-    'graphql_content',
     'graphql_json',
   ];
 

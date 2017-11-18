@@ -5,7 +5,6 @@ namespace Drupal\graphql_json\Plugin\Deriver;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
-use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

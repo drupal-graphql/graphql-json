@@ -19,7 +19,6 @@ class JsonUrlTest extends GraphQLFileTestBase {
    */
   public static $modules = [
     'graphql_core',
-    'graphql_content',
     'graphql_json',
   ];
 

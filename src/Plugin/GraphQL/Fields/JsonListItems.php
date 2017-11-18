@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "items",
  *   type = "JsonNode",
  *   multi = true,
- *   types = {"JsonList"}
+ *   parents = {"JsonList"}
  * )
  */
 class JsonListItems extends FieldPluginBase {

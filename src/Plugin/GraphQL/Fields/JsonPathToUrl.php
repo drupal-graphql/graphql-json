@@ -14,7 +14,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   name = "pathToUrl",
  *   secure = true,
  *   type = "Url",
- *   types = {"JsonObject", "JsonList"},
+ *   parents = {"JsonObject", "JsonList"},
  *   arguments={
  *     "steps" = {
  *       "type" = "String",

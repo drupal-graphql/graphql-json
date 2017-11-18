@@ -13,7 +13,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   secure = true,
  *   name = "json",
  *   type = "JsonNode",
- *   types = {"InternalResponse", "ExternalResponse"}
+ *   parents = {"InternalResponse", "ExternalResponse"}
  * )
  */
 class JsonResponseContent extends ResponseContent {

@@ -1,0 +1,8 @@
+{
+  "name": "drupal/graphql-json",
+  "type": "drupal-module",
+  "description": "Traverse JSON structures with GraphQL.",
+  "homepage": "http://drupal.org/project/graphql_json",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev"
+}

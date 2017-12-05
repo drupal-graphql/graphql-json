@@ -1,7 +1,7 @@
 query {
   route(path: "http://graphql.drupal/json/list") {
     request {
-      ... on ExternalUrl {
+      ... on ExternalResponse {
         json {
           ... on JsonList {
             a:path(steps:[0]) {

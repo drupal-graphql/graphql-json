@@ -3,6 +3,7 @@ namespace Drupal\graphql_json\Plugin\GraphQL\Types;
 
 
 use Drupal\graphql\Plugin\GraphQL\Types\TypePluginBase;
+use Drupal\graphql\Plugin\GraphQL\TypeValidationInterface;
 use Youshido\GraphQL\Execution\ResolveInfo;
 
 /**
@@ -14,7 +15,7 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   unions = {"JsonNode"}
  * )
  */
-class JsonLeaf extends TypePluginBase {
+class JsonLeaf extends TypePluginBase implements TypeValidationInterface {
 
   /**
    * {@inheritdoc}

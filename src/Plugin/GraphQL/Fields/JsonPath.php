@@ -3,8 +3,9 @@
 namespace Drupal\graphql_json\Plugin\GraphQL\Fields;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\Plugin\GraphQL\Fields\FieldPluginBase;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use GraphQL\Type\Definition\ResolveInfo;
 
 /**
  * Traverse json objects with an array of path elements.
@@ -28,7 +29,7 @@ class JsonPath extends FieldPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveInfo $info) {
+  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
     yield NestedArray::getValue($value, $args['steps']);
   }
 

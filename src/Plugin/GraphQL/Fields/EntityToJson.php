@@ -4,10 +4,11 @@ namespace Drupal\graphql_json\Plugin\GraphQL\Fields;
 
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\Plugin\GraphQL\Fields\FieldPluginBase;
+use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-use Youshido\GraphQL\Execution\ResolveInfo;
 
 /**
  * Serialize entities to json.
@@ -60,11 +61,10 @@ class EntityToJson extends FieldPluginBase implements ContainerFactoryPluginInte
     parent::__construct($configuration, $pluginId, $pluginDefinition);
   }
 
-
   /**
    * {@inheritdoc}
    */
-  protected function resolveValues($value, array $args, ResolveInfo $info) {
+  protected function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
     yield json_decode($this->serializer->serialize($value, 'json'), TRUE);
   }
 

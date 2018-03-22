@@ -2,8 +2,7 @@
 
 namespace Drupal\Tests\graphql_json\Kernel;
 
-
-use Drupal\Tests\graphql\Kernel\GraphQLFileTestBase;
+use Drupal\Tests\graphql_core\Kernel\GraphQLCoreTestBase;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 
@@ -12,15 +11,26 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group graphql_json
  */
-class JsonUrlTest extends GraphQLFileTestBase {
+class JsonUrlTest extends GraphQLCoreTestBase {
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
-    'graphql_core',
     'graphql_json',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defaultCacheTags() {
+    return [
+      'entity_field_info',
+      'entity_types',
+      'graphql',
+      'graphql_response',
+    ];
+  }
 
   /**
    * Test json data spanning multiple urls.
@@ -31,7 +41,7 @@ class JsonUrlTest extends GraphQLFileTestBase {
     $httpClient
       ->request('GET', 'http://graphql.drupal/json')
       ->willReturn(new Response(200, [], json_encode([
-        'url' => 'http://graphql.drupal/json/sub'
+        'url' => 'http://graphql.drupal/json/sub',
       ])));
 
     $httpClient
@@ -41,19 +51,23 @@ class JsonUrlTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('url.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('url.gql');
 
-    $this->assertEquals([
-      'json' => [
-        'url' => [
-          'request' => [
-            'json' => [
-              'value' => 'test',
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'json' => [
+            'url' => [
+              'request' => [
+                'json' => [
+                  'value' => 'test',
+                ],
+              ],
             ],
           ],
         ],
       ],
-    ], $result['data']['route']['request']);
+    ], $this->defaultCacheMetaData());
   }
 
 }

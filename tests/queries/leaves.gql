@@ -1,7 +1,7 @@
 query {
   string:route(path: "http://graphql.drupal/json/string") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonLeaf {
             value
@@ -11,8 +11,8 @@ query {
     }
   }
   int:route(path: "http://graphql.drupal/json/int") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonLeaf {
             value
@@ -22,8 +22,8 @@ query {
     }
   }
   float:route(path: "http://graphql.drupal/json/float") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonLeaf {
             value
@@ -33,8 +33,8 @@ query {
     }
   }
   bool:route(path: "http://graphql.drupal/json/bool") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonLeaf {
             value

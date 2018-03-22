@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\graphql\Kernel\GraphQLFileTestBase;
+use Drupal\Tests\graphql_core\Kernel\GraphQLContentTestBase;
 use Drupal\user\Entity\Role;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
@@ -16,26 +17,23 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group graphql_json
  */
-class JsonEntitySerializeTest extends GraphQLFileTestBase {
+class JsonEntitySerializeTest extends GraphQLContentTestBase {
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
-    'node',
     'serialization',
-    'graphql_core',
     'graphql_json',
   ];
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
-    parent::setUp();
-    Role::load('anonymous')
-      ->grantPermission('access content')
-      ->save();
+  protected function defaultCacheContexts() {
+    return array_merge([
+      'user.node_grants:view',
+    ], parent::defaultCacheContexts());
   }
 
   /**
@@ -58,19 +56,23 @@ class JsonEntitySerializeTest extends GraphQLFileTestBase {
     ]));
     $this->container->set('entity.repository', $entityRepository->reveal());
 
-    $result = $this->executeQueryFile('serialize.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('serialize.gql');
 
-    $this->assertEquals([
-      'json' => [
-        'node' => [
-          'toJson' => [
-            'uuid' => [
-              'value' => 'abc',
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'json' => [
+            'node' => [
+              'toJson' => [
+                'uuid' => [
+                  'value' => 'abc',
+                ],
+              ],
             ],
           ],
         ],
       ],
-    ], $result['data']['route']['request']);
+    ], $this->defaultCacheMetaData());
   }
 
 }

@@ -1,7 +1,7 @@
 query {
   route(path: "http://graphql.drupal/json/object") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonObject {
             keys

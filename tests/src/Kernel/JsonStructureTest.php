@@ -3,7 +3,7 @@
 namespace Drupal\Tests\graphql_json\Kernel;
 
 
-use Drupal\Tests\graphql\Kernel\GraphQLFileTestBase;
+use Drupal\Tests\graphql_core\Kernel\GraphQLCoreTestBase;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 
@@ -12,15 +12,26 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group graphql_json
  */
-class JsonStructureTest extends GraphQLFileTestBase {
+class JsonStructureTest extends GraphQLCoreTestBase {
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
-    'graphql_core',
     'graphql_json',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defaultCacheTags() {
+    return [
+      'entity_field_info',
+      'entity_types',
+      'graphql',
+      'graphql_response',
+    ];
+  }
 
   /**
    * Ensure that all leave types are casted into strings.
@@ -46,16 +57,14 @@ class JsonStructureTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('leaves.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('leaves.gql');
 
-    $this->assertEquals([
-      'data' => [
-        'string' => ['request' => ['json' => ['value' => 'test']]],
-        'int' => ['request' => ['json' => ['value' => '1']]],
-        'float' => ['request' => ['json' => ['value' => '0.5']]],
-        'bool' => ['request' => ['json' => ['value' => '1']]],
-      ],
-    ], $result);
+    $this->assertResults($query, [], [
+      'string' => ['request' => ['json' => ['value' => 'test']]],
+      'int' => ['request' => ['json' => ['value' => '1']]],
+      'float' => ['request' => ['json' => ['value' => '0.5']]],
+      'bool' => ['request' => ['json' => ['value' => '1']]],
+    ], $this->defaultCacheMetaData());
   }
 
   /**
@@ -74,15 +83,24 @@ class JsonStructureTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('object.gql', [], TRUE, TRUE);
+    $query = $this->getQueryFromFile('object.gql');
 
-    $this->assertEquals([
-      'keys' => ['a', 'b', 'c'],
-      'a' => ['value' => 'A'],
-      'b' => ['value' => 'B'],
-    ], $result['data']['route']['request']['json']);
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'json' => [
+            'keys' => ['a', 'b', 'c'],
+            'a' => ['value' => 'A'],
+            'b' => ['value' => 'B'],
+          ],
+        ],
+      ],
+    ], $this->defaultCacheMetaData());
   }
 
+  /**
+   * Test list traversal.
+   */
   public function testJsonList() {
     $httpClient = $this->prophesize(ClientInterface::class);
 
@@ -92,15 +110,22 @@ class JsonStructureTest extends GraphQLFileTestBase {
 
     $this->container->set('http_client', $httpClient->reveal());
 
-    $result = $this->executeQueryFile('list.gql', [], TRUE, TRUE);
-    $this->assertEquals([
-      'a' => ['value' => 'A'],
-      'b' => ['value' => 'B'],
-      'items' => [
-        ['value' => 'A'],
-        ['value' => 'B'],
-        ['value' => 'C'],
+    $query = $this->getQueryFromFile('list.gql');
+    $this->assertResults($query, [], [
+      'route' => [
+        'request' => [
+          'json' => [
+            'a' => ['value' => 'A'],
+            'b' => ['value' => 'B'],
+            'items' => [
+              ['value' => 'A'],
+              ['value' => 'B'],
+              ['value' => 'C'],
+            ],
+          ],
+        ],
       ],
-    ], $result['data']['route']['request']['json']);
+    ], $this->defaultCacheMetaData());
   }
+
 }

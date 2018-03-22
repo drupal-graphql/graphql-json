@@ -6,7 +6,7 @@ query {
           ... on JsonObject {
             node:pathToEntity(type: "node", steps: ["node"]) {
               toJson {
-                uuid:path(steps: ["uuid", 0, "value"]) {
+                uuid:path(steps: ["uuid", "0", "value"]) {
                   ... on JsonLeaf {
                     value
                   }

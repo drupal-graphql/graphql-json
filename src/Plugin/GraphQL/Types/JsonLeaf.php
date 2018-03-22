@@ -1,10 +1,11 @@
 <?php
+
 namespace Drupal\graphql_json\Plugin\GraphQL\Types;
 
 
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\Plugin\GraphQL\Types\TypePluginBase;
-use Drupal\graphql\Plugin\GraphQL\TypeValidationInterface;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use GraphQL\Type\Definition\ResolveInfo;
 
 /**
  * GraphQL type for json list nodes.
@@ -15,21 +16,13 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  *   unions = {"JsonNode"}
  * )
  */
-class JsonLeaf extends TypePluginBase implements TypeValidationInterface {
+class JsonLeaf extends TypePluginBase {
 
   /**
    * {@inheritdoc}
    */
-  public function isValidValue($value) {
-    return !(is_object($value) || is_array($value));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function applies($value, ResolveInfo $info =  NULL) {
+  public function applies($value, ResolveContext $context, ResolveInfo $info) {
     return !is_array($value);
   }
-
 
 }

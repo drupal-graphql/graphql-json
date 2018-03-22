@@ -2,8 +2,9 @@
 
 namespace Drupal\graphql_json\Plugin\GraphQL\Fields;
 
-use Drupal\graphql_core\Plugin\GraphQL\Fields\Routing\ResponseContent;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
+use Drupal\graphql_core\Plugin\GraphQL\Fields\Routing\Response\ResponseContent;
+use GraphQL\Type\Definition\ResolveInfo;
 
 /**
  * Get the response content of an internal or external request as json object.
@@ -18,8 +19,11 @@ use Youshido\GraphQL\Execution\ResolveInfo;
  */
 class JsonResponseContent extends ResponseContent {
 
-  protected function resolveValues($value, array $args, ResolveInfo $info) {
-    foreach (parent::resolveValues($value, $args, $info) as $item) {
+  /**
+   * {@inheritdoc}
+   */
+  protected function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
+    foreach (parent::resolveValues($value, $args, $context, $info) as $item) {
       if ($data = json_decode($item, TRUE)) {
         yield $data;
       }

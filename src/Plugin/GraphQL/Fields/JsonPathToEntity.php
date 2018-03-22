@@ -5,8 +5,9 @@ namespace Drupal\graphql_json\Plugin\GraphQL\Fields;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
+use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Youshido\GraphQL\Execution\ResolveInfo;
 
 /**
  * Extract Url objects from json paths.
@@ -69,8 +70,8 @@ class JsonPathToEntity extends JsonPath implements ContainerFactoryPluginInterfa
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveInfo $info) {
-    foreach (parent::resolveValues($value, $args, $info) as $item) {
+  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
+    foreach (parent::resolveValues($value, $args, $context, $info) as $item) {
       if ($entity = $this->entityRepository->loadEntityByUuid($args['type'], $item)) {
         if ($entity->access('view')) {
           yield $entity;

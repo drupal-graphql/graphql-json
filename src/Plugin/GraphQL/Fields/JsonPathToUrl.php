@@ -3,8 +3,9 @@
 namespace Drupal\graphql_json\Plugin\GraphQL\Fields;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql_core\Plugin\GraphQL\Fields\Routing\Route;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use GraphQL\Type\Definition\ResolveInfo;
 
 /**
  * Extract Url objects from json paths.
@@ -28,8 +29,8 @@ class JsonPathToUrl extends Route {
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveInfo $info) {
-    foreach (parent::resolveValues(NULL, ['path' => NestedArray::getValue($value, $args['steps'])], $info) as $item) {
+  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
+    foreach (parent::resolveValues(NULL, ['path' => NestedArray::getValue($value, $args['steps'])], $context, $info) as $item) {
       yield $item;
     }
   }

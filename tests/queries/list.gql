@@ -1,15 +1,15 @@
 query {
   route(path: "http://graphql.drupal/json/list") {
-    request {
-      ... on ExternalResponse {
+    ... on ExternalUrl {
+      request {
         json {
           ... on JsonList {
-            a:path(steps:[0]) {
+            a:path(steps:["0"]) {
               ... on JsonLeaf {
                 value
               }
             }
-            b:path(steps:[1]) {
+            b:path(steps:["1"]) {
               ... on JsonLeaf {
                 value
               }

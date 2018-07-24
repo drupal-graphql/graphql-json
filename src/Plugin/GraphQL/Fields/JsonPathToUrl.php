@@ -29,9 +29,9 @@ class JsonPathToUrl extends Route {
   /**
    * {@inheritdoc}
    */
-  public function resolveValues($value, array $args, ResolveContext $context, ResolveInfo $info) {
+  public function resolve($value, array $args, ResolveContext $context, ResolveInfo $info) {
     foreach (parent::resolveValues(NULL, ['path' => NestedArray::getValue($value, $args['steps'])], $context, $info) as $item) {
-      yield $item;
+      return $item;
     }
   }
 

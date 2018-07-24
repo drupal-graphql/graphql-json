@@ -28,15 +28,6 @@ class JsonEntitySerializeTest extends GraphQLContentTestBase {
   ];
 
   /**
-   * {@inheritdoc}
-   */
-  protected function defaultCacheContexts() {
-    return array_merge([
-      'user.node_grants:view',
-    ], parent::defaultCacheContexts());
-  }
-
-  /**
    * Test traversing serialized entities.
    */
   public function testJsonEntity() {
